@@ -1,0 +1,55 @@
+
+<div class="registro">
+  <h2>
+    REGISTRO DE CLIENTES DEL BANCO
+  </h2>
+  <form [formGroup]="miFormulario" (ngSubmit)="onSubmit()">
+ <div formGroupName="datosUsuario">
+  <label>Identificacion</label>
+    <input type="number" class="identificacion"
+    id="identificacion"
+    formControlName="identificacion">
+    <span
+  *ngIf="!miFormulario.get('datosUsuario.identificacion').valid && miFormulario.get('datosUsuario.identificacion').touched "
+    class="help-block">Este campo es requerido.
+     </span>
+
+
+    <label>Nombre</label>
+    <input type="text" class="nombre"
+     id="nombre"
+    formControlName="nombre">
+    <span
+  *ngIf="!miFormulario.get('datosUsuario.nombre').valid && miFormulario.get('datosUsuario.nombre').touched "
+    class="help-block">Este campo es requerido.
+     </span>
+
+    <label>Apellido</label>
+    <input type="text" class="apellido"
+    id="apellido"
+    formControlName="apellido">
+
+  <span
+  *ngIf="!miFormulario.get('datosUsuario.apellido').valid && miFormulario.get('datosUsuario.apellido').touched "
+    class="help-block">Este campo es requerido.
+    </span>
+
+     <label>Fecha de nacimiento</label>
+    <input type="date" class="fecha"
+    id="fecha"
+    formControlName="fecha"
+    required>
+  </div>
+   <span
+  *ngIf="!miFormulario.get('datosUsuario.fecha').valid && miFormulario.get('datosUsuario.fecha').touched "
+    class="help-block">Este campo es requerido.
+    </span>
+
+    <button
+     type="submit"
+     class="">
+     Save
+    </button>
+  </form>
+
+</div>
