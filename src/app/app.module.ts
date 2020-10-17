@@ -9,13 +9,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { RegistroComponent } from './registro/registro.component';
+import {RegistroService } from './registro.service';
+import { SolicitudCreditoComponent } from './solicitud-credito/solicitud-credito.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    RegistroComponent
+    RegistroComponent,
+    SolicitudCreditoComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { RegistroComponent } from './registro/registro.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [RegistroService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

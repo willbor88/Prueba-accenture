@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+
+import {RegistroService } from '../registro.service';
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -8,7 +11,9 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 export class RegistroComponent implements OnInit {
 
   miFormulario : FormGroup
-  constructor() { }
+  constructor(
+    private registroService: RegistroService,
+  ) { }
 
   ngOnInit(): void {
 
@@ -38,7 +43,10 @@ export class RegistroComponent implements OnInit {
 
   onSubmit(){
 
-    //console.log(this.miFormulario)
+    console.log(this.miFormulario)
+
+    this.registroService.anadirCliente(this.miFormulario.value);
+
 
 
   }
