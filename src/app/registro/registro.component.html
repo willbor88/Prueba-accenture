@@ -4,44 +4,44 @@
     REGISTRO DE CLIENTES DEL BANCO
   </h2>
   <form [formGroup]="miFormulario" (ngSubmit)="onSubmit()">
- <div formGroupName="datosUsuario">
+ <!-- <div formGroupName="datosUsuario"> -->
   <label>Identificacion</label>
-    <input type="number" class="identificacion"
-    id="identificacion"
-    formControlName="identificacion">
+    <input type="number" class="identification"
+    id="identification"
+    formControlName="identification">
     <span
-  *ngIf="!miFormulario.get('datosUsuario.identificacion').valid && miFormulario.get('datosUsuario.identificacion').touched "
+  *ngIf="!miFormulario.get('identification').valid && miFormulario.get('identification').touched "
     class="help-block">Este campo es requerido.
      </span>
 
 
     <label>Nombre</label>
-    <input type="text" class="nombre"
-     id="nombre"
-    formControlName="nombre">
+    <input type="text" class="firstname"
+     id="firstname"
+    formControlName="firstname">
     <span
-  *ngIf="!miFormulario.get('datosUsuario.nombre').valid && miFormulario.get('datosUsuario.nombre').touched "
+  *ngIf="!miFormulario.get('firstname').valid && miFormulario.get('firstname').touched "
     class="help-block">Este campo es requerido.
      </span>
 
     <label>Apellido</label>
-    <input type="text" class="apellido"
-    id="apellido"
-    formControlName="apellido">
+    <input type="text" class="lastname"
+    id="lastname"
+    formControlName="lastname">
 
   <span
-  *ngIf="!miFormulario.get('datosUsuario.apellido').valid && miFormulario.get('datosUsuario.apellido').touched "
+  *ngIf="!miFormulario.get('lastname').valid && miFormulario.get('lastname').touched "
     class="help-block">Este campo es requerido.
     </span>
 
      <label>Fecha de nacimiento</label>
-    <input type="date" class="fecha"
-    id="fecha"
-    formControlName="fecha"
+    <input type="date" class="birthdate"
+    id="birthdate"
+    formControlName="birthdate"
     required>
-  </div>
+  <!-- </div> -->
    <span
-  *ngIf="!miFormulario.get('datosUsuario.fecha').valid && miFormulario.get('datosUsuario.fecha').touched "
+  *ngIf="!miFormulario.get('birthdate').valid && miFormulario.get('birthdate').touched "
     class="help-block">Este campo es requerido.
     </span>
 
@@ -50,12 +50,25 @@
             class="help-block">Debes llenar todos los campos
           </span>
 
-    <button
+          <button
      type="submit"
      class=""
      [disabled]="!miFormulario.valid">
      Save
     </button>
-  </form>
+        </form>
+
+    <div>
+      <p *ngIf="clienteExistente">El Cliente ya se habia registrado</p>
+    </div>
+
+    <div>
+      <p *ngIf="registroExitoso">Registro Exitoso</p>
+    </div>
+
+  <div class="error">
+    <p *ngIf="error">{{mensaje}}</p>
+  </div>
+  <a routerLink="/home">Regresar</a>
 
 </div>

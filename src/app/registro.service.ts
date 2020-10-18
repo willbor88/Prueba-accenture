@@ -1,102 +1,129 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from './cliente.model';
 import { HttpClient } from '@angular/common/http'
-import { map } from "rxjs/operators";
+import { map} from "rxjs/operators";
+import { from,Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegistroService {
 
-  //clientesChanged = new Subject<Cliente[]>();
+  clientesChanged = new Subject<Cliente[]>();
+  clienteChanged = new Subject<Cliente>();
+  ClienteEncontrado = new Subject<Boolean>();
+ private econtradoCiclo:boolean
 
-  // private cliente: Cliente= [
-  //   new Cliente(
-  //     'Wilmar',
-  //     'Borja!',
-  //     '1020123456',
-  //     '17-01-2020'
-  //     )
+  private Encontrado:boolean = false;
 
-
-  private clientState =
-{
-  "-Lb_JtJG2xzkIAihkVwB": {
-    "birthdate": "01-03-1993",
-    "firstname": "Carlos",
-    "identification": "123456789",
-    "lastname": "Pérez"
-  },
-  "-Lbnb_rjnETvumkbug_I": {
-    "birthdate": "06-05-2001",
-    "firstname": "pedro",
-    "identification": "1234",
-    "lastname": "jose"
-  },
-}
+//   private clientState =
+// {
+//   "-Lb_JtJG2xzkIAihkVwB": {
+//     "birthdate": "01-03-1993",
+//     "firstname": "Carlos",
+//     "identification": "123456789",
+//     "lastname": "Pérez"
+//   },
+//   "-Lbnb_rjnETvumkbug_I": {
+//     "birthdate": "06-05-2001",
+//     "firstname": "pedro",
+//     "identification": "1234",
+//     "lastname": "jose"
+//   },
+// }
 
   private clientes: Cliente[] = [];
 
-constructor(private http:HttpClient ) {}
+constructor(private http:HttpClient ) {
+
+}
 
   anadirCliente(cliente: Cliente) {
-    //this.clientes =
-    this.clientes.push(cliente)
-    //this.clientesChanged.next(this.clientes.slice());
+   //console.log(cliente)
+
+   return this.http
+    .post<Cliente>(//Especificar a typescrit que formato o tipo de datos recibiremos de la peticion http atreves del body de la peticion  usando  "<>""
+      'https://testbankapi.firebaseio.com/clients.json',//la extencion .json solo es necesario en Firebase
+      cliente//El body de la peticion :La data para almacenar
+    )
+
+
+
+
   }
 
   consultarClientes(id: string) {
-//    this.http.get('https://angular-http-1f4ea.firebaseio.com/posts.json')
-    this.http.get('https://testbankapi.firebaseio.com/clients.json')
+    //id.toString()
+    this.econtradoCiclo=false
 
-    .pipe(map((DatosRecibidos :Cliente) =>{ //Especificar la estructura  dato que recibiermosy asi sabremos que propiedades podemos usar
+
+//    this.http.get('https://angular-http-1f4ea.firebaseio.com/posts.json')
+  this.http.get('https://testbankapi.firebaseio.com/clients.json')
+
+    .pipe(map((DatosRecibidos :Cliente) =>{ //Especificar la estructura  dato que recibiermosy asi sabremos que propiedades podemos usar ejecutando codigo para modifcar
           const postsArray:Cliente[] =[]//Definir el tipo de array
   //Metodo para recorrer los elementos o propiedades  de un objeto
       for (const key in DatosRecibidos) {//El key es el nombre de cada elemento del objeto
-        if (DatosRecibidos.hasOwnProperty(key)) {//hasOwnProperty:Valida que cada elmento si tenga un key o nombre
-          postsArray.push({...DatosRecibidos[key],id:key})//DatosRecibidos[key] extrae  el valor de cada  elemento del objeto
-        //Luego copio las propiedades o elementos de cada objeto   y añado a una nueva propiedad 'id' a cada elemento y finalmente push a nuestro array
+       if (DatosRecibidos.hasOwnProperty(key)) {//hasOwnProperty:Valida que cada elmento si tenga un key o nombre
+
+           // console.log(DatosRecibidos)
+
+           postsArray.push({...DatosRecibidos[key],id:key})//Extraer las propiedades y elementos a un nuevo array
+
+
+      }
        }
-         }
-
-         return postsArray
-      //console.log(DatosRecibidos)//Este es objeto en estado "Crudo" como venia de la api
-      //console.log(postsArray)//Genero un array con cada uno de los valores extraidos de cada elemento
-       }))
 
 
-    .subscribe(ClientesRecibidos =>{
-     //console.log(post[0].title)
-     console.log(ClientesRecibidos)
+      return postsArray
 
-     //return ClientesRecibidos
-    })
+    }
+  ))
+  .subscribe(ClientesRecibido =>{
+
+    for (const key of ClientesRecibido) {
+
+      //if(key['identification']=='123456789'){
+        if(key['identification']== id){
+       // console.log(key)
+        this.clienteChanged.next(key);
+        this.ClienteEncontrado.next(this.Encontrado=true);
+       this.econtradoCiclo= true
+        break
+      }
+      // else{
+      //   console.log('will')
+      //   this.econtradoCiclo=false
+      // }
+    }
+      if(!this.econtradoCiclo){
+
+       this.ClienteEncontrado.next(this.Encontrado=false);
+
+      }
+
+
+  })
+
+
+// })
+
 
   }
 
-  // getCliente(index: number) {
-  //   return this.clientes[index];
-  // }
-
-  // addIngredientsToShoppingList(ingredients: Ingredient[]) {
-  //   this.slService.addIngredients(ingredients);
-  // }
-
-  // addCliente(Cliente: Cliente) {
-  //   this.clientes.push(Cliente);
-  //   this.clientesChanged.next(this.clientes.slice());
-  // }
-
-  // updateCliente(index: number, newCliente: Cliente) {
-  //   this.clientes[index] = newCliente;
-  //   this.clientesChanged.next(this.clientes.slice());
-  // }
-
-  // deleteCliente(index: number) {
-  //   this.clientes.splice(index, 1);
-  //   this.clientesChanged.next(this.clientes.slice());
-  // }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

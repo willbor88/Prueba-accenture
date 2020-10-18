@@ -11,29 +11,36 @@ import {RegistroService } from '../registro.service';
 export class RegistroComponent implements OnInit {
 
   miFormulario : FormGroup
+  error:Boolean
+  mensaje:String
+  clienteExistente:Boolean
+  registroExitoso:Boolean
+
   constructor(
     private registroService: RegistroService,
   ) { }
 
   ngOnInit(): void {
+    this.error=false
+    this.clienteExistente=false
 
     this.miFormulario = new FormGroup({
 
-      'datosUsuario':new FormGroup({
-        'identificacion':new FormControl(null,[Validators.required,Validators.minLength(6)]),
+     // 'datosUsuario':new FormGroup({
+        'identification':new FormControl(null,[Validators.required,Validators.minLength(6)]),
        //'nombrecompleto':new FormGroup({
-        'nombre':new FormControl(null,[Validators.required,
+        'firstname':new FormControl(null,[Validators.required,
           // OJO FUNCION A LLAMAR
         //this.FunUsuariosProhibidos.bind(this)
         ]),//<USAMOS bind para que reconsco el metodo
         //Recibe dos Argumentos:El primer Agurmento  es el valor por defecto que tendra el control, el segundo son los validadores que aplicaremos al control
-      'apellido':new FormControl(null,[Validators.required]),
+      'lastname':new FormControl(null,[Validators.required]),
     //}),
 
-       'fecha':new FormControl(null,[Validators.required,]),
+       'birthdate':new FormControl(null,[Validators.required,]),
 
 
-    })
+    //})
   })
 
 
@@ -42,10 +49,36 @@ export class RegistroComponent implements OnInit {
 
 
   onSubmit(){
+    this.registroExitoso=false
+    this.clienteExistente=false
 
-    console.log(this.miFormulario)
+   //console.log(this.miFormulario)
+   //console.log(this.miFormulario.value.identification)
 
-    this.registroService.anadirCliente(this.miFormulario.value);
+    this.registroService.consultarClientes(this.miFormulario.value.identification)
+    this.registroService.ClienteEncontrado.subscribe(res =>{
+      //console.log(res)
+      if (res==true) {
+        //console.log(res)
+        this.clienteExistente=true
+      }
+      else{
+
+        this.registroService.anadirCliente(this.miFormulario.value).subscribe(respuestaData => {
+          //console.log(respuestaData );
+          this.registroExitoso=true
+
+        },
+        error =>{
+          this.error=true
+          this.mensaje=error['message']+'\n' + 'Estatus:' + error['status']
+          console.log(error)
+          //this.error=error.message
+        }
+        )
+
+      }
+    })
 
 
 
