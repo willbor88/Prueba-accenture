@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+$Primero:#FE5D26;
+$Segundo:#F2C078;
+$Tercero:#FAEDCA;
+$Cuarto:#7EBC89;
+$quinto:#C1DBB3;
+
+
+
+  body{
+    background-image: linear-gradient(to right top, #fe5d26, #fb7c32, #f79544, #f4ac5c, #f2c078);
+    background-repeat: no-repeat;
+  }

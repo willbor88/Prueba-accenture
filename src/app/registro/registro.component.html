@@ -38,28 +38,24 @@
     <input type="date" class="birthdate"
     id="birthdate"
     formControlName="birthdate"
-    required>
+    required (onblur)="ingresoFecha()">
+
   <!-- </div> -->
+
    <span
   *ngIf="!miFormulario.get('birthdate').valid && miFormulario.get('birthdate').touched "
-    class="help-block">Este campo es requerido.
+    class="help-block">Edad invalida.
     </span>
-
-    <span
-          *ngIf="!miFormulario.valid && miFormulario.touched "
-            class="help-block">Debes llenar todos los campos
-          </span>
-
-          <button
+     <button
      type="submit"
      class=""
      [disabled]="!miFormulario.valid">
-     Save
+     Registrar Cliente
     </button>
         </form>
 
     <div>
-      <p *ngIf="clienteExistente">El Cliente ya se habia registrado</p>
+      <p *ngIf="clienteExistente">El Cliente ya esta registrado previamente</p>
     </div>
 
     <div>

@@ -108,6 +108,7 @@ export class SolicitudCreditoComponent implements OnInit {
 
   mostrarMensaje(){
     this.mensaje=true
+    this.miFormulario.reset()//Limpiar campos del formulario
   }
 
   onSubmit(){
