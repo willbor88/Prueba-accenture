@@ -1,5 +1,32 @@
 # PruebaAccenture
 
+Angular CLI: 9.0.7
+Node: 12.18.3
+OS: win32 x64
+
+Angular: 9.0.7
+... animations, cli, common, compiler, compiler-cli, core, forms
+... language-service, platform-browser, platform-browser-dynamic
+... router
+Ivy Workspace: Yes
+
+Package                           Version
+-----------------------------------------------------------
+@angular-devkit/architect         0.900.7
+@angular-devkit/build-angular     0.900.7
+@angular-devkit/build-optimizer   0.900.7
+@angular-devkit/build-webpack     0.900.7
+@angular-devkit/core              9.0.7
+@angular-devkit/schematics        9.0.7
+@ngtools/webpack                  9.0.7
+@schematics/angular               9.0.7
+@schematics/update                0.900.7
+rxjs                              6.5.5
+typescript                        3.7.5
+webpack                           4.41.2
+
+Sass
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
 
 ## Development server
